@@ -12,5 +12,13 @@ class ConstructorReferenceTest {
     void main() {
         Function<Runnable, Thread> threadGenerator = Thread::new;
         Runnable t1 = () -> System.out.println("T1 execute");
+        Runnable t2 = () -> System.out.println("T2 execute");
+        Thread thread1 = threadGenerator.apply(t1);
+        Thread thread2 = threadGenerator.apply(t2);
+        thread1.start();
+        thread2.start();
+        threadGenerator
+                .apply(() -> System.out.println("T3 execute"))
+                .start();
     }
 }
